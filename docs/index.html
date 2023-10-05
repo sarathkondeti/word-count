@@ -14,12 +14,28 @@
     
     <script>
         document.getElementById('fetchButton').addEventListener('click', function() {
-            const url = document.getElementById('urlInput').value;
+            const youtube_url = document.getElementById('urlInput').value;
             const outputDiv = document.getElementById('output');
-            
             // Clear previous output
             outputDiv.innerHTML = '';
             
+            // Define the rest api server hosted on aws (bound to change)
+            const rest_server = 'ec2-3-231-47-95.compute-1.amazonaws.com:5000';
+
+            // Define the arguments as an object
+            const args = {
+                yt_url: youtube_url
+            };
+
+            // Convert the arguments object into a query string
+            const queryString = Object.keys(args)
+                .map(key => `${key}=${encodeURIComponent(args[key])}`)
+                .join('&');
+
+            // Append the query string to the base URL
+            const url = `${baseUrl}?${queryString}`;
+
+
             // Make a GET request to the provided URL
             fetch(url)
                 .then(response => {
