@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Youtube word count</title>
+</head>
+<body>
+    <h1>Find out how many times a word is said in a Youtube video.</h1>
+    
+    <label for="urlInput">Enter URL:</label>
+    <input type="text" id="urlInput" placeholder="Enter a URL">
+    <button id="fetchButton">Fetch Data</button>
+    
+    <div id="output"></div>
+    
+    <script>
+        document.getElementById('fetchButton').addEventListener('click', function() {
+            const url = document.getElementById('urlInput').value;
+            const outputDiv = document.getElementById('output');
+            
+            // Clear previous output
+            outputDiv.innerHTML = '';
+            
+            // Make a GET request to the provided URL
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    // Display the response data in the outputDiv
+                    outputDiv.innerHTML = `<p>Response:</p><pre>${data}</pre>`;
+                })
+                .catch(error => {
+                    outputDiv.innerHTML = `<p>Error: ${error.message}</p>`;
+                });
+        });
+    </script>
+</body>
+</html>
