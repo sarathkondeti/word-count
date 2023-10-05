@@ -1,5 +1,5 @@
-# Build command: docker build -t simple-rest-api .
-# Run command:   docker run -p 5000:5000 simple-rest-api
+# Build command: docker build -t word-count-api .
+# Run command:   docker run -p 5000:5000 word-count-api
 
 
 
