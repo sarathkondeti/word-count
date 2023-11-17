@@ -6,25 +6,33 @@
 <body>
     <h1>Find out how many times a word is said in a Youtube video.</h1>
     
-    <label for="urlInput">Enter URL:</label>
-    <input type="text" id="urlInput" placeholder="Enter a URL" style="min-width: 300px;">
+    <input type="text" id="urlInput" placeholder="Enter a URL" style="min-width: 500px;">
+    <br>
+    <input type="text" id="wordInput" placeholder="word or phrase to count" style="min-width: 100px;">
+    <br>
     <button id="fetchButton">Fetch Data</button>
-    
+    <br>
+    Example:<br>
+    URL  - https://www.youtube.com/watch?v=DPZzrlFCD_I&t=11s <br>
+    word - jello
+    <br><br>
     <div id="output"></div>
     
     <script>
         document.getElementById('fetchButton').addEventListener('click', function() {
             const youtube_url = document.getElementById('urlInput').value;
+            const word_to_count = document.getElementById('wordInput').value;
             const outputDiv = document.getElementById('output');
             // Clear previous output
-            outputDiv.innerHTML = '';
+            outputDiv.innerHTML = '1) Downloading audio 2) converting to FLAC 3) Transcripting 4) counting';
             
-            // Define the rest api server hosted on aws (bound to change)
-            const rest_server = 'http://ec2-3-231-47-95.compute-1.amazonaws.com:5000/';
+            // Define the rest api server running locally
+            const rest_server = 'http://127.0.0.1:5000';
 
             // Define the arguments as an object
             const args = {
-                yt_url: youtube_url
+                yt_url: youtube_url,
+                word_to_count: word_to_count
             };
 
             // Convert the arguments object into a query string
@@ -42,6 +50,7 @@
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
+                    // console.log(response.data)
                     return response.text();
                 })
                 .then(data => {
